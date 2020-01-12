@@ -33,7 +33,7 @@ class Player {
     {
     
         if ( (partieFini(grilleAct) !=0) || profondeur == 0)
-            return partieFini(grilleAct);
+            return partieFini(grilleAct)*(1+profondeur);
         else {
             int score = 0;
             for (int i = 1; i <= profondeur; i++)
@@ -78,37 +78,26 @@ class Player {
     {
         if( (grille[0][0].getVal() != 0) && (grille[0][0].getVal() == grille[1][1].getVal()) && (grille[1][1].getVal() == grille[2][2].getVal()) )
         {
-            if (grille[0][0].getVal() == -1)
-                return -10;
-            else
-                return 1;
+                return 10;
         }
         if( (grille[1][1].getVal() != 0) && (grille[0][2].getVal() == grille[1][1].getVal()) && (grille[1][1].getVal() == grille[2][0].getVal()) )
         {
-            if (grille[1][1].getVal() == -1)
-                return -10;
-            else
-                return 1;
+
+                return 10;
         }
 
         for(int i = 0; i < 3; i++)
         {
             if( (grille[i][0].getVal() != 0) && ( grille[i][0].getVal() == grille[i][1].getVal() ) && ( grille[i][1].getVal() == grille[i][2].getVal() ) )
             {
-                if (grille[i][0].getVal() == -1)
-                    return -10;
-                else
-                    return 1;
+                    return 10;
             }
         }
         for(int j = 0; j < 3; j++)
         {
             if( (grille[0][j].getVal() != 0 )  && ( grille[0][j].getVal() == grille[1][j].getVal() ) && ( grille[1][j].getVal() == grille[2][j].getVal() ) )
             {
-                if (grille[0][j].getVal() == -1)
-                    return -10;
-                else
-                    return 1;
+                    return 10;
             }
         }
         return 0;
@@ -184,16 +173,16 @@ class Player {
                 int max = -1000;
                 int caseAJoue = 1;
                 int score;
-                for(int g=1;g<(9-tourJeu);g++)
+                for(int g=1;g<(11-tourJeu);g++)
                 {
                     score = 0;
                     //System.err.println(g);
                     
                     int X = caseNumI(grille, g).getX();
                     int Y = caseNumI(grille, g).getY();
-                    score = score + min_max(Simulation(grille, X, Y, joueur), (6-tourJeu), joueur*(-1));
-                    
-                    System.err.println(min_max(Simulation(grille, X, Y, joueur), (6-tourJeu), joueur*(-1)));
+                    score = score + min_max(Simulation(grille, X, Y, joueur), (9-tourJeu), joueur*(-1));
+                    System.err.println(score);
+                    //System.err.println(min_max(Simulation(grille, X, Y, joueur), (6-tourJeu), joueur*(-1)));
                     
                     
                     if (score > max)
