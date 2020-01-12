@@ -28,7 +28,7 @@ class Player {
         grilleSimu[x][y].setVal(val);
         return grilleSimu;
     }
-    
+   
     public static int min_max(Case[][] grilleAct, int profondeur, int joueur)
     {
     
