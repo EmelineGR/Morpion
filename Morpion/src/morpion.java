@@ -49,6 +49,7 @@ class Player {
     public static Case caseNumI(Case[][] grilleAct, int i)
     {
         int compteur = 1;
+        
         for (int k = 0; k < 3; k++)
         {
             for (int l = 0 ; l< 3; l++) 
@@ -77,25 +78,37 @@ class Player {
     {
         if( (grille[0][0].getVal() != 0) && (grille[0][0].getVal() == grille[1][1].getVal()) && (grille[1][1].getVal() == grille[2][2].getVal()) )
         {
-            return grille[0][0].getVal();
+            if (grille[0][0].getVal() == -1)
+                return -10;
+            else
+                return 1;
         }
         if( (grille[1][1].getVal() != 0) && (grille[0][2].getVal() == grille[1][1].getVal()) && (grille[1][1].getVal() == grille[2][0].getVal()) )
         {
-            return grille[1][1].getVal();
+            if (grille[1][1].getVal() == -1)
+                return -10;
+            else
+                return 1;
         }
 
         for(int i = 0; i < 3; i++)
         {
             if( (grille[i][0].getVal() != 0) && ( grille[i][0].getVal() == grille[i][1].getVal() ) && ( grille[i][1].getVal() == grille[i][2].getVal() ) )
             {
-                return grille[i][0].getVal();
+                if (grille[i][0].getVal() == -1)
+                    return -10;
+                else
+                    return 1;
             }
         }
         for(int j = 0; j < 3; j++)
         {
             if( (grille[0][j].getVal() != 0 )  && ( grille[0][j].getVal() == grille[1][j].getVal() ) && ( grille[1][j].getVal() == grille[2][j].getVal() ) )
             {
-                return grille[0][j].getVal();
+                if (grille[0][j].getVal() == -1)
+                    return -10;
+                else
+                    return 1;
             }
         }
         return 0;
@@ -163,11 +176,10 @@ class Player {
                     System.out.println("1 1");
                     grille[1][1].setVal(1);
                     joueur = joueur*(-1);
-                    
                 }
                     
             }
-            if(tourJeu<=3)
+            if(tourJeu >= 3)
             {
                 int max = -1000;
                 int caseAJoue = 1;
@@ -179,9 +191,10 @@ class Player {
                     
                     int X = caseNumI(grille, g).getX();
                     int Y = caseNumI(grille, g).getY();
-                    score = score + min_max(Simulation(grille, X, Y, joueur), (8-tourJeu), joueur*(-1));
+                    score = score + min_max(Simulation(grille, X, Y, joueur), (6-tourJeu), joueur*(-1));
                     
-                    //System.err.println(score);
+                    System.err.println(min_max(Simulation(grille, X, Y, joueur), (6-tourJeu), joueur*(-1)));
+                    
                     
                     if (score > max)
                     {
@@ -189,7 +202,6 @@ class Player {
                         caseAJoue = g;
                     }
                 }
-                tourJeu++;
                 int x = caseNumI(grille, caseAJoue).getX();
                 int y = caseNumI(grille, caseAJoue).getY();
                 
@@ -197,13 +209,14 @@ class Player {
                 {
                     for (int l = 0 ; l< 3; l++) 
                     { 
-                        System.err.println(grille[k][l].getVal());
+                        //System.err.println(grille[k][l].getVal());
                     }
                 }
                 
                 System.out.println(x + " "+ y);
                 grille[x][y].setVal(1);
             }
+            tourJeu++;
         }
     }
 }
